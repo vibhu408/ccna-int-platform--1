@@ -11,3 +11,45 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+  build:
+    runs-on: ubuntu-latest
+    needs: source
+    steps:
+      - name: Build project
+        run: echo "Build logic here"
+
+  qaplan:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: QA Planning
+        run: echo "QA Planning logic here"
+
+  qadeploystorage:
+    runs-on: ubuntu-latest
+    needs: qaplan
+    steps:
+      - name: Deploy to QA Storage
+        run: echo "Deploy to QA Storage logic here"
+
+  qadeployeast:
+    runs-on: ubuntu-latest
+    needs: qadeploystorage
+    steps:
+      - name: Deploy to QA East
+        run: echo "Deploy to QA East logic here"
+
+  qadeploywest:
+    runs-on: ubuntu-latest
+    needs: qadeployeast
+    steps:
+      - name: Deploy to QA West
+        run: echo "Deploy to QA West logic here"
+
+  uatplan:
+    runs-on: ubuntu-latest
+    needs: qadeploywest
+    steps:
+      - name: UAT Planning
+        run: echo "UAT Planning logic here"
